@@ -9,6 +9,8 @@
         float moveDelay = 0.3f;
         int currentPosition = 0;
         float lastMoveTime;
+        int direction = 1;    
+
 
         //public GameMangaer gameManager;
 
@@ -30,33 +32,23 @@
             {
                 yield return new WaitForSeconds(moveDelay);
                 //MoveToNextPosition();
-                currentPosition++;
+                currentPosition += direction;
                 Debug.Log("Nr: " + currentPosition);
 
-                if (currentPosition >= positions.Count){
-                    while (currentPosition > 0)
-                    {
-                        if (currentPosition != positions.Count)
-                        {
-                            yield return new WaitForSeconds(moveDelay);
-                            Debug.Log("Pause");
-                        }
-
-                        currentPosition--;
-                        transform.position = positions[currentPosition].position;
-                        Debug.Log("Number: " + currentPosition);
-
-                        //lastMoveTime = Time.time;
-
-                    }
+                if (currentPosition == positions.Count - 1 || currentPosition == 0){
+                    SwitchDirection();
                 }
+               
 
                 transform.position = positions[currentPosition].position;
             }
 
         }
 
+        void SwitchDirection() {
+            direction *= -1;
 
+        }
 
         //IEnumerator SwitchDirections(){
         //    Debug.Log("In The Numerator!!");
